@@ -1,0 +1,2 @@
+# HW_MultiMediaProcessing_openCV
+2017-2 HW_MultiMediaProcessing_openCV with MFC
