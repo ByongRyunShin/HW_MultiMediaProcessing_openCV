@@ -37,7 +37,11 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void On32771();
+	afx_msg void OnFileOpen();
 	Mat m_NowImg;
 	bool m_opened;
+	afx_msg void OnSave();
+	afx_msg void OnSaveAs();
+	afx_msg void OnQuitProgram();
+	CString m_NowImgPath;
 };

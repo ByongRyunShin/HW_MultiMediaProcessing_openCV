@@ -29,7 +29,8 @@ public:
 
 // 구현입니다.
 protected:
-	DECLARE_MESSAGE_MAP()
+	DECLARE_MESSAGE_MAP();
+
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
@@ -42,6 +43,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+
 END_MESSAGE_MAP()
 
 
@@ -52,6 +54,7 @@ END_MESSAGE_MAP()
 CMultiMediaProcessingProject1Dlg::CMultiMediaProcessingProject1Dlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_MULTIMEDIAPROCESSINGPROJECT1_DIALOG, pParent)
 	, m_opened(false)
+	, m_NowImgPath(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -65,7 +68,10 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_COMMAND(ID_32771, &CMultiMediaProcessingProject1Dlg::On32771)
+	ON_COMMAND(ID_32771, &CMultiMediaProcessingProject1Dlg::OnFileOpen)
+	ON_COMMAND(ID_32772, &CMultiMediaProcessingProject1Dlg::OnSave)
+	ON_COMMAND(ID_32773, &CMultiMediaProcessingProject1Dlg::OnSaveAs)
+	ON_COMMAND(ID_32774, &CMultiMediaProcessingProject1Dlg::OnQuitProgram)
 END_MESSAGE_MAP()
 
 
@@ -197,19 +203,48 @@ void CMultiMediaProcessingProject1Dlg::DisplayImage(int IDC_PICTURE_TARGET, Mat 
 	}
 }
 
-void CMultiMediaProcessingProject1Dlg::On32771()
+//File Open
+void CMultiMediaProcessingProject1Dlg::OnFileOpen()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	char szFilter[] = "Image (*.BMP, *.GIF, *.JPG, *.PNG) | *.BMP;*.GIF;*.JPG;*.PNG;*.bmp;*.gif;*.jpg;*.png | All Files(*.*)|*.*||";
 	CFileDialog dlg(TRUE, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, szFilter, AfxGetMainWnd());
 	if (dlg.DoModal() == IDOK)
 	{
-		CString cstrImgPath = dlg.GetPathName();
+		m_NowImgPath = dlg.GetPathName();
 		//AfxMessageBox(cstrImgPath);
 
-		Mat src = imread(string(cstrImgPath));
+		Mat src = imread(string(m_NowImgPath));
 		m_NowImg = src;
 		DisplayImage(IDC_PIC, src);
 		m_opened = true;
 	}
+}
+
+//File Save
+void CMultiMediaProcessingProject1Dlg::OnSave()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	if (m_opened == true) {
+		imwrite(string(m_NowImgPath), m_NowImg);
+		AfxMessageBox("저장완료!");
+	}
+	else {
+		AfxMessageBox("이미지를 먼저 여세여~!");
+	}
+}
+
+
+
+
+void CMultiMediaProcessingProject1Dlg::OnSaveAs()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
+
+
+void CMultiMediaProcessingProject1Dlg::OnQuitProgram()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	PostQuitMessage(0);
 }
