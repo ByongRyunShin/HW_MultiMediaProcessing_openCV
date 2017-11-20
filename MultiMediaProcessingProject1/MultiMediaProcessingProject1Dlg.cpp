@@ -240,6 +240,18 @@ void CMultiMediaProcessingProject1Dlg::OnSave()
 void CMultiMediaProcessingProject1Dlg::OnSaveAs()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	if (m_opened == true) {
+		char szFilter[] = "JPEG Image (*.jpg)|*.jpg|PNG Image (*.png)|*.png|Bitmap Image (*.bmp)|*.bmp|";
+		CFileDialog dlg(FALSE, "jpg", "*.jpg", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT | OFN_NOCHANGEDIR, szFilter, NULL);
+		if (dlg.DoModal() == IDOK) {
+			CString SavePath=dlg.GetPathName();
+			imwrite(string(SavePath), m_NowImg);
+			AfxMessageBox("저장완료!");
+		}
+	}
+	else {
+		AfxMessageBox("이미지를 먼저 여세여~!");
+	}
 }
 
 
