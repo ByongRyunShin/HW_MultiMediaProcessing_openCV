@@ -215,7 +215,7 @@ void CMultiMediaProcessingProject1Dlg::OnFileOpen()
 		//AfxMessageBox(cstrImgPath);
 
 		Mat src = imread(string(m_NowImgPath));
-		m_NowImg = src;
+		m_NowImg = src.clone();
 		DisplayImage(IDC_PIC, src);
 		m_opened = true;
 	}

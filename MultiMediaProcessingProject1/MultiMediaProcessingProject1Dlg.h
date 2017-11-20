@@ -44,4 +44,5 @@ public:
 	afx_msg void OnSaveAs();
 	afx_msg void OnQuitProgram();
 	CString m_NowImgPath;
+	Mat m_PrevImg;
 };
