@@ -1,3 +1,7 @@
+#include <opencv2/opencv.hpp>
+#include "C:\opencv\build\include\opencv2\core\mat.hpp"
+using namespace std;
+using namespace cv;
 
 // MultiMediaProcessingProject1Dlg.h : 헤더 파일
 //
@@ -19,7 +23,8 @@ public:
 
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 지원입니다.
-
+public:
+	void DisplayImage(int IDC_PICTURE_TARGET, Mat targetMat);
 
 // 구현입니다.
 protected:
@@ -31,4 +36,8 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void On32771();
+	Mat m_NowImg;
+	bool m_opened;
 };
