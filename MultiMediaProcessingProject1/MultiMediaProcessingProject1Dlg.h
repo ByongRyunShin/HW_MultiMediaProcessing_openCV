@@ -39,10 +39,13 @@ protected:
 public:
 	afx_msg void OnFileOpen();
 	Mat m_NowImg;
-	bool m_opened;
+	bool m_opened=false;
 	afx_msg void OnSave();
 	afx_msg void OnSaveAs();
 	afx_msg void OnQuitProgram();
 	CString m_NowImgPath;
 	Mat m_PrevImg;
+	afx_msg void OnUndo();
+	afx_msg void OnUpdateUndo(CCmdUI *pCmdUI);
+	bool m_didwork=false;
 };

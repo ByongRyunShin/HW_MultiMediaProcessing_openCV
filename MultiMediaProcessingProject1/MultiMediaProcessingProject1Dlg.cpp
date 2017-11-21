@@ -55,6 +55,7 @@ CMultiMediaProcessingProject1Dlg::CMultiMediaProcessingProject1Dlg(CWnd* pParent
 	: CDialogEx(IDD_MULTIMEDIAPROCESSINGPROJECT1_DIALOG, pParent)
 	, m_opened(false)
 	, m_NowImgPath(_T(""))
+	, m_didwork(false)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -72,6 +73,8 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_32772, &CMultiMediaProcessingProject1Dlg::OnSave)
 	ON_COMMAND(ID_32773, &CMultiMediaProcessingProject1Dlg::OnSaveAs)
 	ON_COMMAND(ID_32774, &CMultiMediaProcessingProject1Dlg::OnQuitProgram)
+	ON_COMMAND(ID_32775, &CMultiMediaProcessingProject1Dlg::OnUndo)
+	ON_UPDATE_COMMAND_UI(ID_32775, &CMultiMediaProcessingProject1Dlg::OnUpdateUndo)
 END_MESSAGE_MAP()
 
 
@@ -109,6 +112,7 @@ BOOL CMultiMediaProcessingProject1Dlg::OnInitDialog()
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 
 	m_opened = false;
+	m_didwork = false;
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -259,4 +263,18 @@ void CMultiMediaProcessingProject1Dlg::OnQuitProgram()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	PostQuitMessage(0);
+}
+
+
+void CMultiMediaProcessingProject1Dlg::OnUndo()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	//m_NowImg = m_PrevImg.clone();
+}
+
+
+void CMultiMediaProcessingProject1Dlg::OnUpdateUndo(CCmdUI *pCmdUI)
+{
+	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
+	pCmdUI->Enable(false);
 }
