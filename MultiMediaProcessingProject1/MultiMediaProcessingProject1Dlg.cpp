@@ -6,6 +6,7 @@
 #include "MultiMediaProcessingProject1.h"
 #include "MultiMediaProcessingProject1Dlg.h"
 #include "afxdialogex.h"
+#include "BitPlaneDig.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -31,6 +32,7 @@ public:
 protected:
 	DECLARE_MESSAGE_MAP();
 
+public:
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
@@ -77,6 +79,7 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_32776, &CMultiMediaProcessingProject1Dlg::OnRGB2GRAY)
 	ON_COMMAND(ID_32777, &CMultiMediaProcessingProject1Dlg::OnChangeLeftRight)
 	ON_COMMAND(ID_32778, &CMultiMediaProcessingProject1Dlg::OnUpsideDown)
+	ON_COMMAND(ID_32779, &CMultiMediaProcessingProject1Dlg::OnPrintBitPlane)
 END_MESSAGE_MAP()
 
 
@@ -320,4 +323,42 @@ void CMultiMediaProcessingProject1Dlg::OnUpsideDown()
 
 	DisplayImage(IDC_PIC, m_NowImg);
 
+}
+
+void getBitPlane(Mat &srcImg, Mat &dstImg, int n)//(원본이미지 , bitplane될 이미지,n칸 
+{
+	uchar mask = 0x01 << n; //쉬프트연산자를 이용하여 n칸 밀어버림니다. 나머지 밀어져 버린 부분은 0으로 숫자가 초기화 됨니다.
+
+
+	Mat_<uchar> s = Mat_<uchar>(srcImg);
+	Mat_<uchar> d = Mat_<uchar>(dstImg);
+
+	for (int r = 0; r < srcImg.rows; r++)
+	{
+		uchar *p = srcImg.ptr<uchar>(r);//첫번째행의 값을 가져온다.
+		uchar *dp = dstImg.ptr<uchar>(r);
+		for (int c = 0; c < srcImg.cols; c++)
+		{
+			uchar pixelvalue = p[c];
+			uchar one_zero = pixelvalue & mask;
+			if (one_zero > 0)
+				dp[c] = 255;
+			else
+				dp[c] = 0;
+		}
+	}
+}
+
+void CMultiMediaProcessingProject1Dlg::OnPrintBitPlane()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+
+	Mat temp=m_NowImg.clone();
+	CBitPlaneDig dlg;
+	dlg.DoModal();
+
+	getBitPlane(m_NowImg, temp, dlg.m_nBit);
+	m_NowImg = temp.clone();
+	DisplayImage(IDC_PIC, m_NowImg);
 }
