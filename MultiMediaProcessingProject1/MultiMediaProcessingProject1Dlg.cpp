@@ -82,6 +82,7 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_32779, &CMultiMediaProcessingProject1Dlg::OnPrintBitPlane)
 	ON_COMMAND(ID_PIXEL32780, &CMultiMediaProcessingProject1Dlg::OnHistogramStretching)
 	ON_COMMAND(ID_PIXEL32781, &CMultiMediaProcessingProject1Dlg::OnHistogramEqualization)
+	ON_COMMAND(ID_PIXEL32782, &CMultiMediaProcessingProject1Dlg::OnNegativeImage)
 END_MESSAGE_MAP()
 
 
@@ -439,5 +440,18 @@ void CMultiMediaProcessingProject1Dlg::OnHistogramEqualization()
 	Mat temp = m_NowImg.clone();
 	histogramEqualization(m_NowImg, temp);
 	m_NowImg = temp.clone();
+	DisplayImage(IDC_PIC, m_NowImg);
+}
+
+
+void CMultiMediaProcessingProject1Dlg::OnNegativeImage()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+
+	IplImage *temp = new IplImage(m_NowImg.clone());
+	cvNot(new IplImage(m_NowImg), temp);
+
+	m_NowImg = cvarrToMat(temp).clone();
 	DisplayImage(IDC_PIC, m_NowImg);
 }

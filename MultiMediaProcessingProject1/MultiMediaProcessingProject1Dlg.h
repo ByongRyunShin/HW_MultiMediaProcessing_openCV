@@ -53,4 +53,5 @@ public:
 	afx_msg void OnPrintBitPlane();
 	afx_msg void OnHistogramStretching();
 	afx_msg void OnHistogramEqualization();
+	afx_msg void OnNegativeImage();
 };
