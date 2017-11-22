@@ -51,4 +51,6 @@ public:
 	afx_msg void OnChangeLeftRight();
 	afx_msg void OnUpsideDown();
 	afx_msg void OnPrintBitPlane();
+	afx_msg void OnHistogramStretching();
+	afx_msg void OnHistogramEqualization();
 };

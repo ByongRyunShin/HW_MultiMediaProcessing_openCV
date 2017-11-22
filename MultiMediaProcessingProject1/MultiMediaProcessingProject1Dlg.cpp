@@ -80,6 +80,8 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_32777, &CMultiMediaProcessingProject1Dlg::OnChangeLeftRight)
 	ON_COMMAND(ID_32778, &CMultiMediaProcessingProject1Dlg::OnUpsideDown)
 	ON_COMMAND(ID_32779, &CMultiMediaProcessingProject1Dlg::OnPrintBitPlane)
+	ON_COMMAND(ID_PIXEL32780, &CMultiMediaProcessingProject1Dlg::OnHistogramStretching)
+	ON_COMMAND(ID_PIXEL32781, &CMultiMediaProcessingProject1Dlg::OnHistogramEqualization)
 END_MESSAGE_MAP()
 
 
@@ -359,6 +361,83 @@ void CMultiMediaProcessingProject1Dlg::OnPrintBitPlane()
 	dlg.DoModal();
 
 	getBitPlane(m_NowImg, temp, dlg.m_nBit);
+	m_NowImg = temp.clone();
+	DisplayImage(IDC_PIC, m_NowImg);
+}
+
+void histogramStretching(Mat img, Mat& out)
+{
+	int lowvalue = 255, highvalue = 0;
+	int i, j;
+	for (i = 0; i < img.rows; i++)
+	{
+		for (j = 0; j < img.cols; j++)
+		{
+			if (lowvalue > img.at<uchar>(i, j))
+				lowvalue = img.at<uchar>(i, j);
+			if (highvalue < img.at<uchar>(i, j))
+				highvalue = img.at<uchar>(i, j);
+		}
+	}
+	// histogram stretching 계산
+	float mult = 255 / (float)(highvalue - lowvalue);
+	for (i = 0; i < img.rows; i++)
+	{
+		for (j = 0; j < img.cols; j++)
+			out.at<uchar>(i, j) = (uchar)(img.at<uchar>(i, j) - lowvalue) * mult;
+	}
+}
+
+void CMultiMediaProcessingProject1Dlg::OnHistogramStretching()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+
+	Mat temp = m_NowImg.clone();
+	histogramStretching(m_NowImg, temp);
+	m_NowImg = temp.clone();
+	DisplayImage(IDC_PIC, m_NowImg);
+}
+
+void histogramEqualization(Mat img, Mat& out)
+{
+	int i, j;
+	unsigned int hist[256] = { 0, };
+	float cdf[256] = { 0, };
+	int pixel, max;
+
+	for (i = 0; i < img.rows; i++)
+	{
+		for (j = 0; j < img.cols; j++)
+		{
+			hist[img.at<uchar>(i, j)]++;
+		}
+	}
+
+	cdf[0] = hist[0];
+
+	for (i = 1; i < 256; i++)
+		cdf[i] = cdf[i - 1] + hist[i];
+
+	max = cdf[255];
+
+	for (i = 0; i < img.rows; i++)
+	{
+		for (j = 0; j < img.cols; j++)
+		{
+			pixel = cdf[img.at<uchar>(i, j)] / max * 255;
+			out.at<uchar>(i, j) = (pixel > 255) ? 255 : pixel;
+		}
+	}
+}
+
+void CMultiMediaProcessingProject1Dlg::OnHistogramEqualization()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+
+	Mat temp = m_NowImg.clone();
+	histogramEqualization(m_NowImg, temp);
 	m_NowImg = temp.clone();
 	DisplayImage(IDC_PIC, m_NowImg);
 }
