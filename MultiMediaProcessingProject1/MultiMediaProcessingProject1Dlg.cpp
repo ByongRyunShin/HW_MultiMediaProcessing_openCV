@@ -75,6 +75,7 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_32774, &CMultiMediaProcessingProject1Dlg::OnQuitProgram)
 	ON_COMMAND(ID_32775, &CMultiMediaProcessingProject1Dlg::OnUndo)
 	ON_COMMAND(ID_32776, &CMultiMediaProcessingProject1Dlg::OnRGB2GRAY)
+	ON_COMMAND(ID_32777, &CMultiMediaProcessingProject1Dlg::OnChangeLeftRight)
 END_MESSAGE_MAP()
 
 
@@ -113,7 +114,7 @@ BOOL CMultiMediaProcessingProject1Dlg::OnInitDialog()
 
 	m_opened = false;
 	m_didwork = false;
-
+	/*
 	CMenu *p_menu = GetMenu();
 	if (p_menu != NULL) {
 		CMenu *p_sub_menu = p_menu->GetSubMenu(1);
@@ -121,7 +122,7 @@ BOOL CMultiMediaProcessingProject1Dlg::OnInitDialog()
 			p_sub_menu->EnableMenuItem(ID_32775, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 		}
 	}
-
+	*/
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -278,7 +279,8 @@ void CMultiMediaProcessingProject1Dlg::OnUndo()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	m_NowImg = m_PrevImg.clone();
-	
+
+	DisplayImage(IDC_PIC, m_NowImg);
 }
 
 void CMultiMediaProcessingProject1Dlg::OnRGB2GRAY()
@@ -291,3 +293,16 @@ void CMultiMediaProcessingProject1Dlg::OnRGB2GRAY()
 	DisplayImage(IDC_PIC, m_NowImg);
 }
 
+
+
+void CMultiMediaProcessingProject1Dlg::OnChangeLeftRight()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+
+	Mat temp;
+	flip(m_NowImg, temp, 1);
+	m_NowImg = temp.clone();
+
+	DisplayImage(IDC_PIC, m_NowImg);
+}

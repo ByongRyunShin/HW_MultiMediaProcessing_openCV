@@ -48,4 +48,5 @@ public:
 	afx_msg void OnUndo();
 	bool m_didwork=false;
 	afx_msg void OnRGB2GRAY();
+	afx_msg void OnChangeLeftRight();
 };
