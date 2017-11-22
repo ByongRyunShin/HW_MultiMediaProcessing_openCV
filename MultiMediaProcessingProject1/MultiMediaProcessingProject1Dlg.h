@@ -49,4 +49,5 @@ public:
 	bool m_didwork=false;
 	afx_msg void OnRGB2GRAY();
 	afx_msg void OnChangeLeftRight();
+	afx_msg void OnUpsideDown();
 };

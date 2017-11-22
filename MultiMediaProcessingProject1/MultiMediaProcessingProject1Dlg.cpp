@@ -76,6 +76,7 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_32775, &CMultiMediaProcessingProject1Dlg::OnUndo)
 	ON_COMMAND(ID_32776, &CMultiMediaProcessingProject1Dlg::OnRGB2GRAY)
 	ON_COMMAND(ID_32777, &CMultiMediaProcessingProject1Dlg::OnChangeLeftRight)
+	ON_COMMAND(ID_32778, &CMultiMediaProcessingProject1Dlg::OnUpsideDown)
 END_MESSAGE_MAP()
 
 
@@ -305,4 +306,18 @@ void CMultiMediaProcessingProject1Dlg::OnChangeLeftRight()
 	m_NowImg = temp.clone();
 
 	DisplayImage(IDC_PIC, m_NowImg);
+}
+
+
+void CMultiMediaProcessingProject1Dlg::OnUpsideDown()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+
+	Mat temp;
+	flip(m_NowImg, temp, 0);
+	m_NowImg = temp.clone();
+
+	DisplayImage(IDC_PIC, m_NowImg);
+
 }
