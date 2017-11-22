@@ -74,7 +74,7 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_32773, &CMultiMediaProcessingProject1Dlg::OnSaveAs)
 	ON_COMMAND(ID_32774, &CMultiMediaProcessingProject1Dlg::OnQuitProgram)
 	ON_COMMAND(ID_32775, &CMultiMediaProcessingProject1Dlg::OnUndo)
-	ON_UPDATE_COMMAND_UI(ID_32775, &CMultiMediaProcessingProject1Dlg::OnUpdateUndo)
+	ON_COMMAND(ID_32776, &CMultiMediaProcessingProject1Dlg::OnRGB2GRAY)
 END_MESSAGE_MAP()
 
 
@@ -113,6 +113,15 @@ BOOL CMultiMediaProcessingProject1Dlg::OnInitDialog()
 
 	m_opened = false;
 	m_didwork = false;
+
+	CMenu *p_menu = GetMenu();
+	if (p_menu != NULL) {
+		CMenu *p_sub_menu = p_menu->GetSubMenu(1);
+		if (p_sub_menu != NULL) {
+			p_sub_menu->EnableMenuItem(ID_32775, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
+		}
+	}
+
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -258,7 +267,6 @@ void CMultiMediaProcessingProject1Dlg::OnSaveAs()
 	}
 }
 
-
 void CMultiMediaProcessingProject1Dlg::OnQuitProgram()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
@@ -269,12 +277,17 @@ void CMultiMediaProcessingProject1Dlg::OnQuitProgram()
 void CMultiMediaProcessingProject1Dlg::OnUndo()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
-	//m_NowImg = m_PrevImg.clone();
+	m_NowImg = m_PrevImg.clone();
+	
 }
 
-
-void CMultiMediaProcessingProject1Dlg::OnUpdateUndo(CCmdUI *pCmdUI)
+void CMultiMediaProcessingProject1Dlg::OnRGB2GRAY()
 {
-	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
-	pCmdUI->Enable(false);
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+	Mat grayImg;
+	cvtColor(m_NowImg, grayImg, CV_BGR2GRAY);
+	m_NowImg = grayImg.clone();
+	DisplayImage(IDC_PIC, m_NowImg);
 }
+

@@ -46,6 +46,6 @@ public:
 	CString m_NowImgPath;
 	Mat m_PrevImg;
 	afx_msg void OnUndo();
-	afx_msg void OnUpdateUndo(CCmdUI *pCmdUI);
 	bool m_didwork=false;
+	afx_msg void OnRGB2GRAY();
 };
