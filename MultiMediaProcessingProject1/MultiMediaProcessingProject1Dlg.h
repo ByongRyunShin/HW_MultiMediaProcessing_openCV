@@ -54,4 +54,5 @@ public:
 	afx_msg void OnHistogramStretching();
 	afx_msg void OnHistogramEqualization();
 	afx_msg void OnNegativeImage();
+	afx_msg void OnThresholdFiltering();
 };

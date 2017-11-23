@@ -7,6 +7,7 @@
 #include "MultiMediaProcessingProject1Dlg.h"
 #include "afxdialogex.h"
 #include "BitPlaneDig.h"
+#include "ThresholdDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -83,6 +84,7 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_PIXEL32780, &CMultiMediaProcessingProject1Dlg::OnHistogramStretching)
 	ON_COMMAND(ID_PIXEL32781, &CMultiMediaProcessingProject1Dlg::OnHistogramEqualization)
 	ON_COMMAND(ID_PIXEL32782, &CMultiMediaProcessingProject1Dlg::OnNegativeImage)
+	ON_COMMAND(ID_PIXEL32783, &CMultiMediaProcessingProject1Dlg::OnThresholdFiltering)
 END_MESSAGE_MAP()
 
 
@@ -453,5 +455,22 @@ void CMultiMediaProcessingProject1Dlg::OnNegativeImage()
 	cvNot(new IplImage(m_NowImg), temp);
 
 	m_NowImg = cvarrToMat(temp).clone();
+	DisplayImage(IDC_PIC, m_NowImg);
+}
+
+
+void CMultiMediaProcessingProject1Dlg::OnThresholdFiltering()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+
+	Mat temp = m_NowImg.clone();
+
+	CThresholdDlg dlg;
+	dlg.DoModal();
+
+	threshold(m_NowImg, temp, dlg.m_nThrValue, 255, THRESH_BINARY);
+	
+	m_NowImg = temp.clone();
 	DisplayImage(IDC_PIC, m_NowImg);
 }
