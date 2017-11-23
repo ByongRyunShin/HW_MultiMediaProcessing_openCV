@@ -11,6 +11,7 @@
 #define IDD_BITPLANE                    132
 #define IDD_THRES                       134
 #define IDD_BLUR                        136
+#define IDD_EXPAND                      138
 #define IDC_PIC                         1000
 #define IDC_OKBTN                       1002
 #define IDC_EDITBIT                     1004
@@ -18,6 +19,8 @@
 #define IDC_EDIT1                       1006
 #define IDC_RADIO2                      1008
 #define IDC_RADIO5                      1009
+#define IDC_RADIO1                      1009
+#define IDC_SPIN1                       1010
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_32773                        32773
@@ -48,9 +51,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        138
+#define _APS_NEXT_RESOURCE_VALUE        140
 #define _APS_NEXT_COMMAND_VALUE         32796
-#define _APS_NEXT_CONTROL_VALUE         1009
+#define _APS_NEXT_CONTROL_VALUE         1011
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

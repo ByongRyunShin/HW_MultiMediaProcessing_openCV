@@ -190,6 +190,7 @@
   <ItemGroup>
     <ClInclude Include="BitPlaneDig.h" />
     <ClInclude Include="Blurring.h" />
+    <ClInclude Include="ExpandDlg.h" />
     <ClInclude Include="MultiMediaProcessingProject1.h" />
     <ClInclude Include="MultiMediaProcessingProject1Dlg.h" />
     <ClInclude Include="Resource.h" />
@@ -200,6 +201,7 @@
   <ItemGroup>
     <ClCompile Include="BitPlaneDig.cpp" />
     <ClCompile Include="Blurring.cpp" />
+    <ClCompile Include="ExpandDlg.cpp" />
     <ClCompile Include="MultiMediaProcessingProject1.cpp" />
     <ClCompile Include="MultiMediaProcessingProject1Dlg.cpp" />
     <ClCompile Include="stdafx.cpp">

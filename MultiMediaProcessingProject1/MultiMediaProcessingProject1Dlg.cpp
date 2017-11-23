@@ -95,6 +95,7 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_EDGE32790, &CMultiMediaProcessingProject1Dlg::OnLaplacianMasking)
 	ON_COMMAND(ID_MORPHOLOGY32791, &CMultiMediaProcessingProject1Dlg::OnMorphologyOpen)
 	ON_COMMAND(ID_MORPHOLOGY32792, &CMultiMediaProcessingProject1Dlg::OnMorphologyClose)
+	ON_COMMAND(ID_GEOMETRIC32793, &CMultiMediaProcessingProject1Dlg::OnExpand)
 END_MESSAGE_MAP()
 
 
@@ -631,4 +632,11 @@ void CMultiMediaProcessingProject1Dlg::OnMorphologyClose()
 
 	m_NowImg = temp.clone();
 	DisplayImage(IDC_PIC, m_NowImg);
+}
+
+
+void CMultiMediaProcessingProject1Dlg::OnExpand()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+
 }

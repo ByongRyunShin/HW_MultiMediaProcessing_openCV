@@ -63,4 +63,5 @@ public:
 	afx_msg void OnLaplacianMasking();
 	afx_msg void OnMorphologyOpen();
 	afx_msg void OnMorphologyClose();
+	afx_msg void OnExpand();
 };
