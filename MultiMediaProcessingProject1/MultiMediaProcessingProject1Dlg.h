@@ -62,4 +62,5 @@ public:
 	afx_msg void OnSobelMasking();
 	afx_msg void OnLaplacianMasking();
 	afx_msg void OnMorphologyOpen();
+	afx_msg void OnMorphologyClose();
 };

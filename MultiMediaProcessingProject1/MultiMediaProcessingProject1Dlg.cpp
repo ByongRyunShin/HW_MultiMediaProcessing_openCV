@@ -94,6 +94,7 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_EDGE32789, &CMultiMediaProcessingProject1Dlg::OnSobelMasking)
 	ON_COMMAND(ID_EDGE32790, &CMultiMediaProcessingProject1Dlg::OnLaplacianMasking)
 	ON_COMMAND(ID_MORPHOLOGY32791, &CMultiMediaProcessingProject1Dlg::OnMorphologyOpen)
+	ON_COMMAND(ID_MORPHOLOGY32792, &CMultiMediaProcessingProject1Dlg::OnMorphologyClose)
 END_MESSAGE_MAP()
 
 
@@ -611,6 +612,22 @@ void CMultiMediaProcessingProject1Dlg::OnMorphologyOpen()
 	Mat matrix(3, 3, CV_8U, Scalar(1));
 
 	morphologyEx(m_NowImg, temp, MORPH_OPEN, matrix);
+
+	m_NowImg = temp.clone();
+	DisplayImage(IDC_PIC, m_NowImg);
+}
+
+
+void CMultiMediaProcessingProject1Dlg::OnMorphologyClose()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+	Mat temp = m_NowImg.clone();
+
+	//마스크 사이즈?? 띠용??
+	Mat matrix(3, 3, CV_8U, Scalar(1));
+
+	morphologyEx(m_NowImg, temp, MORPH_CLOSE, matrix);
 
 	m_NowImg = temp.clone();
 	DisplayImage(IDC_PIC, m_NowImg);
