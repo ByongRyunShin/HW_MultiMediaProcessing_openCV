@@ -89,6 +89,8 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_PIXEL32783, &CMultiMediaProcessingProject1Dlg::OnThresholdFiltering)
 	ON_COMMAND(ID_NEIGHBORHOOD32784, &CMultiMediaProcessingProject1Dlg::OnBlurring)
 	ON_COMMAND(ID_NEIGHBORHOOD32785, &CMultiMediaProcessingProject1Dlg::OnUnSharpMasking)
+	ON_COMMAND(ID_NEIGHBORHOOD32786, &CMultiMediaProcessingProject1Dlg::OnAverageFiltering)
+	ON_COMMAND(ID_NEIGHBORHOOD32787, &CMultiMediaProcessingProject1Dlg::OnMedianFiltering)
 END_MESSAGE_MAP()
 
 
@@ -504,6 +506,57 @@ void CMultiMediaProcessingProject1Dlg::OnUnSharpMasking()
 
 	GaussianBlur(m_NowImg, temp, Size(3, 3), 0);
 	addWeighted(m_NowImg, 1.5, temp, -0.5, 0, m_NowImg);
+
+	m_NowImg = temp.clone();
+	DisplayImage(IDC_PIC, m_NowImg);
+}
+
+void averageFilter(Mat& Input, Mat& Output)
+{
+	int row = Input.rows;
+	int col = Input.cols;
+	int size = 1;
+	uchar count = 0;
+	uchar sum = 0;
+
+	for (int j = 1; j < (Input.rows-1); ++j)
+	{
+		const uchar* previous = Input.ptr<uchar>(j - 1);
+		const uchar* current = Input.ptr<uchar>(j);
+		const uchar* next = Input.ptr<uchar>(j + 1);
+
+		uchar* output = Output.ptr<uchar>(j);
+
+		for (int i = 1; i < (Output.cols-1); ++i)
+		{
+			double dResult = (current[i] + current[i - 1] + current[i + 1] +
+				previous[i] + next[i] + previous[i - 1] + previous[i + 1] +
+				next[i - 1] + next[i + 1]) / 9.0;
+			*output++ = (unsigned char)dResult;
+		}
+	}
+}
+
+void CMultiMediaProcessingProject1Dlg::OnAverageFiltering()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+	Mat temp = m_NowImg.clone();
+
+	averageFilter(m_NowImg, temp);
+
+	m_NowImg = temp.clone();
+	DisplayImage(IDC_PIC, m_NowImg);
+}
+
+
+void CMultiMediaProcessingProject1Dlg::OnMedianFiltering()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+	Mat temp = m_NowImg.clone();
+
+	medianBlur(m_NowImg, temp, 3);
 
 	m_NowImg = temp.clone();
 	DisplayImage(IDC_PIC, m_NowImg);

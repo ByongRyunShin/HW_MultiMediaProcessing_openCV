@@ -57,4 +57,6 @@ public:
 	afx_msg void OnThresholdFiltering();
 	afx_msg void OnBlurring();
 	afx_msg void OnUnSharpMasking();
+	afx_msg void OnAverageFiltering();
+	afx_msg void OnMedianFiltering();
 };
