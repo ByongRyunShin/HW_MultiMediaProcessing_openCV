@@ -56,4 +56,5 @@ public:
 	afx_msg void OnNegativeImage();
 	afx_msg void OnThresholdFiltering();
 	afx_msg void OnBlurring();
+	afx_msg void OnUnSharpMasking();
 };

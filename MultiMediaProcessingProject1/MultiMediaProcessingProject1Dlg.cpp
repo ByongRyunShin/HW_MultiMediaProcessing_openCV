@@ -88,6 +88,7 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_PIXEL32782, &CMultiMediaProcessingProject1Dlg::OnNegativeImage)
 	ON_COMMAND(ID_PIXEL32783, &CMultiMediaProcessingProject1Dlg::OnThresholdFiltering)
 	ON_COMMAND(ID_NEIGHBORHOOD32784, &CMultiMediaProcessingProject1Dlg::OnBlurring)
+	ON_COMMAND(ID_NEIGHBORHOOD32785, &CMultiMediaProcessingProject1Dlg::OnUnSharpMasking)
 END_MESSAGE_MAP()
 
 
@@ -489,6 +490,20 @@ void CMultiMediaProcessingProject1Dlg::OnBlurring()
 	dlg.DoModal();
 
 	GaussianBlur(m_NowImg, temp, Size(dlg.m_size, dlg.m_size), 0);
+
+	m_NowImg = temp.clone();
+	DisplayImage(IDC_PIC, m_NowImg);
+}
+
+
+void CMultiMediaProcessingProject1Dlg::OnUnSharpMasking()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+	Mat temp = m_NowImg.clone();
+
+	GaussianBlur(m_NowImg, temp, Size(3, 3), 0);
+	addWeighted(m_NowImg, 1.5, temp, -0.5, 0, m_NowImg);
 
 	m_NowImg = temp.clone();
 	DisplayImage(IDC_PIC, m_NowImg);
