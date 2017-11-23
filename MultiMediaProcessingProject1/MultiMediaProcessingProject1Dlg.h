@@ -59,4 +59,5 @@ public:
 	afx_msg void OnUnSharpMasking();
 	afx_msg void OnAverageFiltering();
 	afx_msg void OnMedianFiltering();
+	afx_msg void OnSobelMasking();
 };

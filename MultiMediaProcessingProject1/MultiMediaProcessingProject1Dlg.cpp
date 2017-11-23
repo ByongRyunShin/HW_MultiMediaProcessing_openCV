@@ -91,6 +91,7 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_NEIGHBORHOOD32785, &CMultiMediaProcessingProject1Dlg::OnUnSharpMasking)
 	ON_COMMAND(ID_NEIGHBORHOOD32786, &CMultiMediaProcessingProject1Dlg::OnAverageFiltering)
 	ON_COMMAND(ID_NEIGHBORHOOD32787, &CMultiMediaProcessingProject1Dlg::OnMedianFiltering)
+	ON_COMMAND(ID_EDGE32789, &CMultiMediaProcessingProject1Dlg::OnSobelMasking)
 END_MESSAGE_MAP()
 
 
@@ -557,6 +558,27 @@ void CMultiMediaProcessingProject1Dlg::OnMedianFiltering()
 	Mat temp = m_NowImg.clone();
 
 	medianBlur(m_NowImg, temp, 3);
+
+	m_NowImg = temp.clone();
+	DisplayImage(IDC_PIC, m_NowImg);
+}
+
+
+void CMultiMediaProcessingProject1Dlg::OnSobelMasking()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+	Mat temp = m_NowImg.clone();
+
+	Mat sobelX, sobelY, sobel;
+	Sobel(m_NowImg, sobelX, CV_16S, 1, 0);
+	Sobel(m_NowImg, sobelY, CV_16S, 0, 1);
+	sobel = abs(sobelX) + abs(sobelY);    // L1 놈(norm) 계산
+
+	double sobmin, sobmax;
+	minMaxLoc(sobel, &sobmin, &sobmax); // sobel 최댓값 찾기
+
+	sobel.convertTo(temp, CV_8U, -255. / sobmax, 255); // 8bit 영상으로 변환
 
 	m_NowImg = temp.clone();
 	DisplayImage(IDC_PIC, m_NowImg);
