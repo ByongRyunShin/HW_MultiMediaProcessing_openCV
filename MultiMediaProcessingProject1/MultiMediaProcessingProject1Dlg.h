@@ -55,4 +55,5 @@ public:
 	afx_msg void OnHistogramEqualization();
 	afx_msg void OnNegativeImage();
 	afx_msg void OnThresholdFiltering();
+	afx_msg void OnBlurring();
 };
