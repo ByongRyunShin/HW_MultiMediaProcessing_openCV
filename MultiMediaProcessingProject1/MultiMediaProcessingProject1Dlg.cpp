@@ -92,6 +92,7 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_NEIGHBORHOOD32786, &CMultiMediaProcessingProject1Dlg::OnAverageFiltering)
 	ON_COMMAND(ID_NEIGHBORHOOD32787, &CMultiMediaProcessingProject1Dlg::OnMedianFiltering)
 	ON_COMMAND(ID_EDGE32789, &CMultiMediaProcessingProject1Dlg::OnSobelMasking)
+	ON_COMMAND(ID_EDGE32790, &CMultiMediaProcessingProject1Dlg::OnLaplacianMasking)
 END_MESSAGE_MAP()
 
 
@@ -458,7 +459,7 @@ void CMultiMediaProcessingProject1Dlg::OnNegativeImage()
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	m_PrevImg = m_NowImg.clone();
 
-	IplImage *temp = new IplImage(m_NowImg.clone());
+	IplImage *temp = new IplImage(m_NowImg);
 	cvNot(new IplImage(m_NowImg), temp);
 
 	m_NowImg = cvarrToMat(temp).clone();
@@ -581,5 +582,19 @@ void CMultiMediaProcessingProject1Dlg::OnSobelMasking()
 	sobel.convertTo(temp, CV_8U, -255. / sobmax, 255); // 8bit 영상으로 변환
 
 	m_NowImg = temp.clone();
+	DisplayImage(IDC_PIC, m_NowImg);
+}
+
+
+void CMultiMediaProcessingProject1Dlg::OnLaplacianMasking()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+
+	//물음표..?
+	IplImage *temp = new IplImage(m_NowImg);
+	cvLaplace(new IplImage(m_NowImg), temp, 3);
+
+	m_NowImg = cvarrToMat(temp).clone();
 	DisplayImage(IDC_PIC, m_NowImg);
 }

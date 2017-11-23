@@ -60,4 +60,5 @@ public:
 	afx_msg void OnAverageFiltering();
 	afx_msg void OnMedianFiltering();
 	afx_msg void OnSobelMasking();
+	afx_msg void OnLaplacianMasking();
 };
