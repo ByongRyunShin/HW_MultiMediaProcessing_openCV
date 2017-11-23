@@ -61,4 +61,5 @@ public:
 	afx_msg void OnMedianFiltering();
 	afx_msg void OnSobelMasking();
 	afx_msg void OnLaplacianMasking();
+	afx_msg void OnMorphologyOpen();
 };
