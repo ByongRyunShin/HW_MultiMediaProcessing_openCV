@@ -10,6 +10,7 @@
 #include "ThresholdDlg.h"
 #include "Blurring.h"
 #include "ExpandDlg.h"
+#include "RotateDlg.h"
 
 
 #ifdef _DEBUG
@@ -97,6 +98,7 @@ BEGIN_MESSAGE_MAP(CMultiMediaProcessingProject1Dlg, CDialogEx)
 	ON_COMMAND(ID_MORPHOLOGY32791, &CMultiMediaProcessingProject1Dlg::OnMorphologyOpen)
 	ON_COMMAND(ID_MORPHOLOGY32792, &CMultiMediaProcessingProject1Dlg::OnMorphologyClose)
 	ON_COMMAND(ID_GEOMETRIC32793, &CMultiMediaProcessingProject1Dlg::OnExpand)
+	ON_COMMAND(ID_GEOMETRIC32795, &CMultiMediaProcessingProject1Dlg::OnRotate)
 END_MESSAGE_MAP()
 
 
@@ -649,6 +651,36 @@ void CMultiMediaProcessingProject1Dlg::OnExpand()
 	resize(m_NowImg, temp, Size(width, height), dlg.m_Inter);
 	
 	dlg.m_Inter = -1;
+	m_NowImg = temp.clone();
+	DisplayImage(IDC_PIC, m_NowImg);
+}
+
+
+
+void CMultiMediaProcessingProject1Dlg::OnRotate()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+	Mat temp = m_NowImg.clone();
+	Point p;
+
+
+	CRotateDlg dlg;
+	dlg.DoModal();
+
+	double angle = dlg.m_rotAngle;
+
+	// get rotation matrix for rotating the image around its center
+	Point2f center(m_NowImg.cols / 2.0, m_NowImg.rows / 2.0);
+	Mat rot = cv::getRotationMatrix2D(center, angle, 1.0);
+	// determine bounding rectangle
+	Rect bbox = cv::RotatedRect(center, m_NowImg.size(), angle).boundingRect();
+	// adjust transformation matrix
+	rot.at<double>(0, 2) += bbox.width / 2.0 - center.x;
+	rot.at<double>(1, 2) += bbox.height / 2.0 - center.y;
+
+	warpAffine(m_NowImg, temp, rot, bbox.size());
+
 	m_NowImg = temp.clone();
 	DisplayImage(IDC_PIC, m_NowImg);
 }

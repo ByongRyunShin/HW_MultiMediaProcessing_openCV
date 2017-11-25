@@ -64,4 +64,5 @@ public:
 	afx_msg void OnMorphologyOpen();
 	afx_msg void OnMorphologyClose();
 	afx_msg void OnExpand();
+	afx_msg void OnRotate();
 };
