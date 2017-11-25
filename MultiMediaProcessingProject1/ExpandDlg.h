@@ -1,5 +1,6 @@
 #pragma once
-
+#include "afxcmn.h"
+#include <opencv2/opencv.hpp>
 
 // CExpandDlg 대화 상자입니다.
 
@@ -22,4 +23,11 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	int m_Inter;
+	UINT m_ratiov;
+	virtual BOOL OnInitDialog();
+	afx_msg void OnDeltaposSpinratio(NMHDR *pNMHDR, LRESULT *pResult);
+	CSpinButtonCtrl m_spinRatio;
+	afx_msg void OnBnClickedRadio1();
+	afx_msg void OnBnClickedRadio2();
+	afx_msg void OnBnClickedOkbtn();
 };

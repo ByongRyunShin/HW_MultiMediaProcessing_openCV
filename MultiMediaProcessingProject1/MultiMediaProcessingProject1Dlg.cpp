@@ -9,6 +9,7 @@
 #include "BitPlaneDig.h"
 #include "ThresholdDlg.h"
 #include "Blurring.h"
+#include "ExpandDlg.h"
 
 
 #ifdef _DEBUG
@@ -638,5 +639,16 @@ void CMultiMediaProcessingProject1Dlg::OnMorphologyClose()
 void CMultiMediaProcessingProject1Dlg::OnExpand()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_PrevImg = m_NowImg.clone();
+	Mat temp = m_NowImg.clone();
 
+	CExpandDlg dlg;
+	dlg.DoModal();
+	int width = (int)(m_NowImg.cols * ((double)dlg.m_ratiov/100));
+	int height = (int)(m_NowImg.rows * ((double)dlg.m_ratiov/100));
+	resize(m_NowImg, temp, Size(width, height), dlg.m_Inter);
+	
+	dlg.m_Inter = -1;
+	m_NowImg = temp.clone();
+	DisplayImage(IDC_PIC, m_NowImg);
 }
